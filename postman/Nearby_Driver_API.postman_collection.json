@@ -1,0 +1,33 @@
+{
+  "info": {
+    "name": "Nearby Driver API",
+    "_postman_id": "12345",
+    "description": "Postman Collection for Nearby Driver Matching System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Request Ride",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user_id\": 1,\n  \"pickup_lat\": 23.8103,\n  \"pickup_lng\": 90.4125,\n  \"radius_km\": 5\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/ride/request",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "ride", "request"]
+        }
+      }
+    }
+  ]
+}

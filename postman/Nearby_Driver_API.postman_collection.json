@@ -1,33 +1,144 @@
 {
-  "info": {
-    "name": "Nearby Driver API",
-    "_postman_id": "12345",
-    "description": "Postman Collection for Nearby Driver Matching System",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Request Ride",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"user_id\": 1,\n  \"pickup_lat\": 23.8103,\n  \"pickup_lng\": 90.4125,\n  \"radius_km\": 5\n}"
+    "info": {
+        "name": "Nearby Driver Matching System API",
+        "_postman_id": "nearby-driver-api-v1",
+        "description": "API for finding nearby available drivers based on pickup location and radius.\n\n**Production URL:** https://nearby-driver-matching-system.vercel.app\n\n**Features:**\n- Find nearby drivers within specified radius\n- Haversine formula for accurate distance calculation\n- Returns drivers sorted by distance (nearest first)\n- Filters only available drivers\n\n**Author:** Md. Mohon\n**GitHub:** https://github.com/Mohon45/nearby-driver",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "https://nearby-driver-matching-system.vercel.app",
+            "type": "string"
         },
-        "url": {
-          "raw": "http://localhost:5000/api/ride/request",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "5000",
-          "path": ["api", "ride", "request"]
+        {
+            "key": "local_url",
+            "value": "http://localhost:5000",
+            "type": "string"
         }
-      }
-    }
-  ]
+    ],
+    "item": [
+        {
+            "name": "Ride Management",
+            "item": [
+                {
+                    "name": "Request Ride - Production",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"pickup_lat\": 23.8103,\n  \"pickup_lng\": 90.4125,\n  \"radius_km\": 5\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/ride/request",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "ride", "request"]
+                        },
+                        "description": "Request a ride by providing pickup location and search radius.\n\n**Request Body:**\n- `user_id` (number): ID of the user requesting the ride\n- `pickup_lat` (number): Latitude of pickup location\n- `pickup_lng` (number): Longitude of pickup location\n- `radius_km` (number): Search radius in kilometers\n\n**Response:**\n- `success` (boolean): Request status\n- `available_drivers` (array): List of nearby available drivers\n  - `driver_id` (number): Driver's unique ID\n  - `car_model` (string): Car model\n  - `distance_km` (number): Distance from pickup location in km\n  - `location` (object): Driver's current location\n    - `lat` (number): Latitude\n    - `lng` (number): Longitude\n\n**Example Response:**\n```json\n{\n  \"success\": true,\n  \"available_drivers\": [\n    {\n      \"driver_id\": 1,\n      \"car_model\": \"Toyota Corolla\",\n      \"distance_km\": 0,\n      \"location\": {\n        \"lat\": 23.8103,\n        \"lng\": 90.4125\n      }\n    }\n  ]\n}\n```"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Request Ride - Local",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"pickup_lat\": 23.8103,\n  \"pickup_lng\": 90.4125,\n  \"radius_km\": 5\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{local_url}}/api/ride/request",
+                            "host": ["{{local_url}}"],
+                            "path": ["api", "ride", "request"]
+                        },
+                        "description": "Local development endpoint for testing.\n\nMake sure to run `npm run dev` before testing this endpoint."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Request Ride - Different Location",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"pickup_lat\": 23.8203,\n  \"pickup_lng\": 90.4225,\n  \"radius_km\": 10\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/ride/request",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "ride", "request"]
+                        },
+                        "description": "Example with different pickup location and larger radius.\n\nThis demonstrates how the API returns drivers sorted by distance from the new pickup location."
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Request Ride - Small Radius",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"user_id\": 1,\n  \"pickup_lat\": 23.8103,\n  \"pickup_lng\": 90.4125,\n  \"radius_km\": 1\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/api/ride/request",
+                            "host": ["{{base_url}}"],
+                            "path": ["api", "ride", "request"]
+                        },
+                        "description": "Example with small radius (1 km).\n\nThis will only return drivers within 1 kilometer of the pickup location."
+                    },
+                    "response": []
+                }
+            ],
+            "description": "Endpoints for ride request and driver matching functionality."
+        }
+    ]
 }

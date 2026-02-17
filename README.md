@@ -1,11 +1,20 @@
 # Nearby Car & Driver Matching System
 
+## 🚀 Live Deployment
+
+**Production URL:** https://nearby-driver-matching-system.vercel.app
+
+**API Endpoint:** https://nearby-driver-matching-system.vercel.app/api/ride/request
+
+---
+
 ## 🚀 Tech Stack
 
 - Node.js
 - Express
-- PostgreSQL
+- PostgreSQL (Railway)
 - Prisma ORM
+- Deployed on Vercel
 
 ---
 
@@ -41,6 +50,19 @@ POST /api/ride/request
 "radius_km": 5
 }
 
+### Example cURL Request:
+
+```bash
+curl -X POST https://nearby-driver-matching-system.vercel.app/api/ride/request \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 1,
+    "pickup_lat": 23.8103,
+    "pickup_lng": 90.4125,
+    "radius_km": 5
+  }'
+```
+
 ---
 
 ## 📊 Features
@@ -48,7 +70,8 @@ POST /api/ride/request
 - Haversine formula distance calculation
 - Sorted by nearest driver
 - Proper project structure
-- Ready for GitHub submission
+- Production deployment on Vercel
+- PostgreSQL database on Railway
 
 ---
 
